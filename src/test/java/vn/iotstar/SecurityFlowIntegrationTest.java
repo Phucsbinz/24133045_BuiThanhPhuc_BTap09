@@ -215,6 +215,61 @@ public class SecurityFlowIntegrationTest {
                 .andExpect(status().isForbidden());
     }
 
+    @Test
+    @DisplayName("VD3: Public login page renders and protected home redirects to VD3 login")
+    void vd3LoginAndUnauthenticatedRedirect() throws Exception {
+        mockMvc.perform(get("/vd3/login"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("vd3/auth/login"));
+        mockMvc.perform(get("/vd3/register"))
+                .andExpect(status().isOk()).andExpect(view().name("vd3/auth/register"));
+        mockMvc.perform(get("/vd3/forgot-password"))
+                .andExpect(status().isOk()).andExpect(view().name("vd3/auth/forgot-password"));
+        mockMvc.perform(get("/vd3/verify-otp"))
+                .andExpect(status().isOk()).andExpect(view().name("vd3/auth/verify-otp"));
+        mockMvc.perform(get("/vd3/reset-password"))
+                .andExpect(status().isOk()).andExpect(view().name("vd3/auth/reset-password"));
+        mockMvc.perform(get("/vd3/home"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/vd3/login"));
+    }
+
+    @Test
+    @DisplayName("VD3: Authenticated user can open dashboard and product list")
+    void vd3UserCanOpenOwnPages() throws Exception {
+        MvcResult loginResult = mockMvc.perform(post("/vd3/login")
+                        .with(csrf())
+                        .param("username", "user01")
+                        .param("password", "123456"))
+                .andExpect(status().is3xxRedirection())
+                .andReturn();
+        MockHttpSession session = (MockHttpSession) loginResult.getRequest().getSession(false);
+        assertNotNull(session);
+        mockMvc.perform(get("/vd3/home").session(session))
+                .andExpect(status().isOk()).andExpect(view().name("vd3/home"));
+        mockMvc.perform(get("/vd3/products").session(session))
+                .andExpect(status().isOk()).andExpect(view().name("vd3/products/list"));
+        mockMvc.perform(get("/vd3/products/create").session(session))
+                .andExpect(status().isOk()).andExpect(view().name("vd3/products/form"));
+    }
+
+    @Test
+    @DisplayName("VD3: Admin user-management pages render")
+    void vd3AdminPagesRender() throws Exception {
+        MvcResult loginResult = mockMvc.perform(post("/vd3/login")
+                        .with(csrf())
+                        .param("username", "admin")
+                        .param("password", "123456"))
+                .andExpect(status().is3xxRedirection())
+                .andReturn();
+        MockHttpSession session = (MockHttpSession) loginResult.getRequest().getSession(false);
+        assertNotNull(session);
+        mockMvc.perform(get("/vd3/users").session(session))
+                .andExpect(status().isOk()).andExpect(view().name("vd3/users/list"));
+        mockMvc.perform(get("/vd3/users/create").session(session))
+                .andExpect(status().isOk()).andExpect(view().name("vd3/users/form"));
+    }
+
     // ==========================================
     // SESSION DÙNG CHUNG & LOGOUT TESTS
     // ==========================================

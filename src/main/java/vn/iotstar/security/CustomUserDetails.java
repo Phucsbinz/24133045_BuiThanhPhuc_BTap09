@@ -79,4 +79,15 @@ public class CustomUserDetails implements UserDetails, Serializable {
     public boolean isEnabled() {
         return enabled;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return this == other || (other instanceof CustomUserDetails that
+                && id != null && id.equals(that.id));
+    }
+
+    @Override
+    public int hashCode() {
+        return id == null ? System.identityHashCode(this) : id.hashCode();
+    }
 }

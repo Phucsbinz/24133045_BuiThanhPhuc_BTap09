@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{vd3/layouts/layout}">
+<head><title>Sản phẩm</title></head>
+<body><main layout:fragment="content">
+    <div class="page-title"><div><h1>Quản lý sản phẩm</h1><p class="muted" th:if="${!isAdmin}">Bạn chỉ xem và quản lý sản phẩm của mình.</p></div><a class="button" th:href="@{/vd3/products/create}">+ Thêm sản phẩm</a></div>
+    <div class="alert success" th:if="${success}" th:text="${success}"></div><div class="alert error" th:if="${error}" th:text="${error}"></div>
+    <form class="toolbar" th:action="@{/vd3/products}" method="get"><input name="keyword" th:value="${keyword}" placeholder="Tìm theo tên hoặc mô tả"><input type="hidden" name="size" th:value="${size}"><button class="button">Tìm</button></form>
+    <div class="table-wrap"><table><thead><tr><th>Ảnh</th><th>Tên</th><th>Mô tả</th><th>Giá</th><th>Chủ sở hữu</th><th>Thao tác</th></tr></thead>
+        <tbody><tr th:each="p : ${products.content}"><td><img class="thumb" th:if="${p.imageUrl != null}" th:src="${p.imageUrl}" alt="Ảnh sản phẩm"><span class="muted" th:unless="${p.imageUrl != null}">Chưa có ảnh</span></td><td th:text="${p.name}"></td><td th:text="${p.description}"></td><td th:text="${#numbers.formatDecimal(p.price,1,2)}"></td><td th:text="${p.username}"></td><td class="actions"><a th:href="@{/vd3/products/edit/{id}(id=${p.id})}">Sửa</a><form th:action="@{/vd3/products/delete/{id}(id=${p.id})}" method="post" onsubmit="return confirm('Xóa sản phẩm này?')"><button class="danger-link">Xóa</button></form></td></tr><tr th:if="${products.empty}"><td colspan="6">Chưa có sản phẩm phù hợp.</td></tr></tbody>
+    </table></div>
+    <nav class="pagination" th:if="${products.totalPages > 1}"><a th:if="${products.hasPrevious()}" th:href="@{/vd3/products(page=${products.number - 1},size=${size},keyword=${keyword})}">«</a><a th:each="i : ${#numbers.sequence(0,products.totalPages - 1)}" th:classappend="${i == products.number ? 'active' : ''}" th:href="@{/vd3/products(page=${i},size=${size},keyword=${keyword})}" th:text="${i + 1}"></a><a th:if="${products.hasNext()}" th:href="@{/vd3/products(page=${products.number + 1},size=${size},keyword=${keyword})}">»</a></nav>
+    <a th:href="@{/vd3/home}">← Dashboard</a>
+</main></body></html>

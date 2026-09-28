@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{vd3/layouts/layout}">
+<head><title>Dashboard</title></head>
+<body><main layout:fragment="content">
+    <div class="page-title"><div><h1>Dashboard VD3</h1><p class="muted">Quản lý tài khoản và sản phẩm theo quyền truy cập.</p></div></div>
+    <div class="cards">
+        <article class="card" sec:authorize="hasRole('ADMIN')"><b>Tổng người dùng</b><strong th:text="${userCount}">0</strong></article>
+        <article class="card"><b>Sản phẩm của bạn</b><strong th:text="${myProductCount}">0</strong></article>
+        <article class="card" sec:authorize="hasRole('ADMIN')"><b>Tổng sản phẩm</b><strong th:text="${productCount}">0</strong></article>
+    </div>
+    <div class="quick-links"><a class="button" th:href="@{/vd3/products}">Quản lý sản phẩm</a><a class="button" sec:authorize="hasRole('ADMIN')" th:href="@{/vd3/users}">Quản lý người dùng</a></div>
+    <section class="panel mt"><h2>Ví dụ đăng nhập</h2><p>VD1 đăng nhập bằng email · VD2 bằng username hoặc email · VD3 thêm đăng ký xác nhận OTP, khôi phục mật khẩu và CRUD.</p></section>
+</main></body>
+</html>

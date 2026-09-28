@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{vd3/layouts/layout}">
+<head><title th:text="${mode == 'create' ? 'Thêm người dùng' : 'Sửa người dùng'}">Người dùng</title></head>
+<body><main layout:fragment="content">
+    <section class="form-card"><h1 th:text="${mode == 'create' ? 'Thêm người dùng' : 'Sửa người dùng'}"></h1>
+        <form th:object="${userDTO}" th:action="${mode == 'create' ? '/vd3/users/create' : '/vd3/users/edit/' + userDTO.id}" method="post">
+            <div class="alert error" th:if="${#fields.hasGlobalErrors()}"><p th:each="e : ${#fields.globalErrors()}" th:text="${e}"></p></div>
+            <label>Username</label><input th:field="*{username}" required><small class="error-text" th:errors="*{username}"></small>
+            <label>Email</label><input type="email" th:field="*{email}" required><small class="error-text" th:errors="*{email}"></small>
+            <label>Họ tên</label><input th:field="*{fullName}" required><small class="error-text" th:errors="*{fullName}"></small>
+            <label>Vai trò</label><select th:field="*{roleName}"><option value="ROLE_USER">USER</option><option value="ROLE_ADMIN">ADMIN</option></select>
+            <label class="check-row"><input type="checkbox" th:field="*{enabled}"> Cho phép đăng nhập</label>
+            <p class="note" th:if="${mode == 'create'}">Mật khẩu ban đầu: <strong>123456</strong>. Người dùng nên đổi mật khẩu sau lần đăng nhập đầu tiên.</p>
+            <p class="muted" th:if="${mode == 'edit'}">Mật khẩu không thay đổi qua biểu mẫu này. Email đã xác nhận: <strong th:text="${userDTO.emailVerified ? 'Có' : 'Chưa'}"></strong>.</p>
+            <button class="button" type="submit">Lưu</button> <a class="button secondary" th:href="@{/vd3/users}">Hủy</a>
+        </form>
+    </section>
+</main></body></html>

@@ -22,5 +22,7 @@ public class UserDTO implements Serializable {
     private Long roleId;
     private String roleName;
     private boolean enabled;
+    private boolean emailVerified;
+    private long productCount;
     private LocalDateTime createdAt;
 }

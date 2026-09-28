@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{vd3/layouts/layout}">
+<head><title th:text="${mode == 'create' ? 'Thêm sản phẩm' : 'Sửa sản phẩm'}">Sản phẩm</title></head>
+<body><main layout:fragment="content">
+    <section class="form-card"><h1 th:text="${mode == 'create' ? 'Thêm sản phẩm' : 'Sửa sản phẩm'}"></h1>
+        <form th:object="${productDTO}" th:action="${mode == 'create' ? '/vd3/products/create' : '/vd3/products/edit/' + productDTO.id}" method="post" enctype="multipart/form-data">
+            <div class="alert error" th:if="${#fields.hasGlobalErrors()}"><p th:each="e : ${#fields.globalErrors()}" th:text="${e}"></p></div>
+            <label>Tên sản phẩm</label><input th:field="*{name}"><small class="error-text" th:errors="*{name}"></small>
+            <label>Mô tả</label><textarea th:field="*{description}" rows="4"></textarea><small class="error-text" th:errors="*{description}"></small>
+            <label>Giá (VND)</label><input type="number" min="0" step="0.01" th:field="*{price}"><small class="error-text" th:errors="*{price}"></small>
+            <label>Ảnh JPEG/PNG, tối đa 5 MB</label><input type="file" name="image" accept="image/jpeg,image/png">
+            <div th:if="${productDTO.imageUrl != null}" class="mt"><p>Ảnh hiện tại</p><img class="preview" th:src="${productDTO.imageUrl}" alt="Ảnh hiện tại"></div>
+            <p class="muted">Ảnh hiện tại được giữ lại nếu không chọn ảnh mới.</p><button class="button" type="submit">Lưu</button> <a class="button secondary" th:href="@{/vd3/products}">Hủy</a>
+        </form>
+    </section>
+</main></body></html>

@@ -14,5 +14,9 @@ public interface UserMapper {
     UserDTO toDto(User user);
 
     @Mapping(target = "role", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "products", ignore = true)
+    @Mapping(target = "emailVerified", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     User toEntity(UserDTO dto);
 }

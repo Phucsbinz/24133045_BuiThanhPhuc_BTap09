@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Đăng ký</title><link rel="stylesheet" th:href="@{/css/app.css}"></head>
+<body class="auth-page"><section class="auth-card"><a th:href="@{/vd3/login}">← Đăng nhập</a><h1>Tạo tài khoản</h1>
+    <form th:action="@{/vd3/register}" th:object="${registerDTO}" method="post">
+        <div class="alert error" th:if="${#fields.hasGlobalErrors()}"><p th:each="e : ${#fields.globalErrors()}" th:text="${e}"></p></div>
+        <label>Username</label><input th:field="*{username}" autocomplete="username"><small class="error-text" th:errors="*{username}"></small>
+        <label>Email</label><input type="email" th:field="*{email}" autocomplete="email"><small class="error-text" th:errors="*{email}"></small>
+        <label>Họ tên</label><input th:field="*{fullName}" autocomplete="name"><small class="error-text" th:errors="*{fullName}"></small>
+        <label>Mật khẩu</label><input type="password" th:field="*{password}" autocomplete="new-password"><small class="error-text" th:errors="*{password}"></small>
+        <label>Xác nhận mật khẩu</label><input type="password" th:field="*{confirmPassword}" autocomplete="new-password"><small class="error-text" th:errors="*{confirmPassword}"></small>
+        <button class="button full mt" type="submit">Đăng ký và gửi OTP</button>
+    </form>
+</section></body></html>

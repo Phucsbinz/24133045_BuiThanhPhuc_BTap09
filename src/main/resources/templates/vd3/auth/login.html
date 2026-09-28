@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Đăng nhập VD3</title><link rel="stylesheet" th:href="@{/css/app.css}"></head>
+<body class="auth-page"><section class="auth-card">
+    <a th:href="@{/}">← Trang chọn ví dụ</a><h1>IOTSTAR SHOP</h1><h2>Đăng nhập VD3</h2>
+    <div class="alert success" th:if="${success}" th:text="${success}"></div>
+    <div class="alert success" th:if="${param.verified}">Email đã xác nhận. Bạn có thể đăng nhập.</div>
+    <div class="alert success" th:if="${param.reset}">Mật khẩu đã đổi; đăng nhập lại để tiếp tục.</div>
+    <div class="alert success" th:if="${param.logout}">Bạn đã đăng xuất.</div>
+    <div class="alert success" th:if="${param.expired}">Phiên đăng nhập trước đã hết hiệu lực.</div>
+    <div class="alert error" th:if="${param.error}">Thông tin đăng nhập không đúng, email chưa xác nhận hoặc tài khoản đã bị khóa.</div>
+    <form th:action="@{/vd3/login}" method="post">
+        <label>Username hoặc email</label><input name="username" autocomplete="username" required autofocus>
+        <label>Mật khẩu</label><input type="password" name="password" autocomplete="current-password" required>
+        <button class="button full mt" type="submit">Đăng nhập</button>
+    </form>
+    <p><a th:href="@{/vd3/register}">Tạo tài khoản</a> · <a th:href="@{/vd3/forgot-password}">Quên mật khẩu?</a></p>
+</section></body>
+</html>

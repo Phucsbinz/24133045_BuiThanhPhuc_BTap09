@@ -31,7 +31,7 @@ public class Vd2UserDetailsService implements UserDetailsService {
                 user.getFullName(),
                 user.getImages(),
                 user.getRole().getName(),
-                user.isEnabled()
+                user.isEnabled() && user.isEmailVerified()
         );
     }
 }

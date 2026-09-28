@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Xác nhận email</title><link rel="stylesheet" th:href="@{/css/app.css}"></head>
+<body class="auth-page"><section class="auth-card"><a th:href="@{/vd3/login}">← Đăng nhập</a><h1>Xác nhận email</h1>
+    <div class="alert success" th:if="${success}" th:text="${success}"></div>
+    <form th:action="@{/vd3/verify-otp}" th:object="${verifyOtpDTO}" method="post">
+        <div class="alert error" th:if="${#fields.hasGlobalErrors()}"><p th:each="e : ${#fields.globalErrors()}" th:text="${e}"></p></div>
+        <label>Email</label><input type="email" th:field="*{email}" autocomplete="email"><small class="error-text" th:errors="*{email}"></small>
+        <label>OTP 6 chữ số</label><input th:field="*{otp}" inputmode="numeric" autocomplete="one-time-code"><small class="error-text" th:errors="*{otp}"></small>
+        <button class="button full mt">Xác nhận</button>
+    </form>
+    <form th:action="@{/vd3/resend-register-otp}" method="post" class="mt"><input type="hidden" name="email" th:value="${verifyOtpDTO.email}"><button class="button secondary full">Gửi lại OTP</button></form>
+    <p>OTP có hiệu lực 5 phút. Gửi lại sau mỗi 60 giây.</p>
+</section></body></html>

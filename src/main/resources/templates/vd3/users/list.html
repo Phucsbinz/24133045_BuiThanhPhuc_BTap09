@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{vd3/layouts/layout}">
+<head><title>Người dùng</title></head>
+<body><main layout:fragment="content">
+    <div class="page-title"><h1>Quản lý người dùng</h1><a class="button" th:href="@{/vd3/users/create}">+ Thêm người dùng</a></div>
+    <div class="alert success" th:if="${success}" th:text="${success}"></div><div class="alert error" th:if="${error}" th:text="${error}"></div>
+    <form class="toolbar" th:action="@{/vd3/users}" method="get"><input name="keyword" th:value="${keyword}" placeholder="Username, email hoặc họ tên"><input type="hidden" name="size" th:value="${size}"><button class="button">Tìm</button></form>
+    <div class="table-wrap"><table><thead><tr><th>ID</th><th>Username</th><th>Email</th><th>Họ tên</th><th>Role</th><th>Trạng thái</th><th>Sản phẩm</th><th>Thao tác</th></tr></thead><tbody>
+        <tr th:each="u : ${users.content}"><td th:text="${u.id}"></td><td th:text="${u.username}"></td><td th:text="${u.email}"></td><td th:text="${u.fullName}"></td><td th:text="${u.roleName}"></td><td th:text="${!u.enabled ? 'Đã khóa' : (u.emailVerified ? 'Hoạt động' : 'Chờ xác nhận email')}"></td><td th:text="${u.productCount}"></td><td class="actions"><a th:href="@{/vd3/users/edit/{id}(id=${u.id})}">Sửa</a><form th:action="@{/vd3/users/delete/{id}(id=${u.id})}" method="post" onsubmit="return confirm('Xóa người dùng này?')"><button class="danger-link">Xóa</button></form></td></tr>
+        <tr th:if="${users.empty}"><td colspan="8">Không có người dùng phù hợp.</td></tr>
+    </tbody></table></div>
+    <nav class="pagination" th:if="${users.totalPages > 1}"><a th:if="${users.hasPrevious()}" th:href="@{/vd3/users(page=${users.number - 1},size=${size},keyword=${keyword})}">«</a><a th:each="i : ${#numbers.sequence(0,users.totalPages - 1)}" th:classappend="${i == users.number ? 'active' : ''}" th:href="@{/vd3/users(page=${i},size=${size},keyword=${keyword})}" th:text="${i + 1}"></a><a th:if="${users.hasNext()}" th:href="@{/vd3/users(page=${users.number + 1},size=${size},keyword=${keyword})}">»</a></nav>
+    <a th:href="@{/vd3/home}">← Dashboard</a>
+</main></body></html>
