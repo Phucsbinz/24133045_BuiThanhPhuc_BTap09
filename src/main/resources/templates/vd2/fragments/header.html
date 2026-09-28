@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<header th:fragment="header" class="topbar">
+    <div class="brand">
+        <a th:href="@{/vd2/home}">UTEShop <span class="feature-tag tag-vd2">VD2</span></a>
+    </div>
+
+    <nav>
+        <a th:href="@{/}">🏠 Trang chọn bài</a>
+        <a th:href="@{/vd2/home}">Trang chủ VD2</a>
+        <a th:href="@{/vd2/admin}" sec:authorize="hasRole('ADMIN')">⚙️ Quản trị Admin</a>
+        <a th:href="@{/vd1/home}">⬅️ Sang VD1</a>
+    </nav>
+
+    <div class="account" sec:authorize="isAuthenticated()">
+        <div class="account-info">
+            <!-- Avatar with fallback -->
+            <img th:src="${#authentication.principal.images != null and !#strings.isEmpty(#authentication.principal.images) ? #authentication.principal.images : '/images/avatar-default.png'}"
+                 alt="Avatar" class="thumb" width="40" height="40" style="border-radius:50%; object-fit:cover;">
+
+            <!-- Full Name -->
+            <span style="font-weight: 600;" th:text="${#authentication.principal.fullName}">Nguyễn Văn A</span>
+
+            <!-- Username -->
+            <span style="color: #cbd5e1; font-size: 13px;" th:text="'(' + ${#authentication.principal.username} + ')'">(user01)</span>
+
+            <!-- Email -->
+            <span style="color: #93c5fd; font-size: 13px;" th:text="${#authentication.principal.email}">user01@gmail.com</span>
+
+            <!-- Role Badge -->
+            <span class="badge" th:classappend="${#authentication.principal.role == 'ROLE_ADMIN' ? 'badge-admin' : 'badge-user'}"
+                  th:text="${#authentication.principal.role}">ROLE_USER</span>
+        </div>
+
+        <!-- Logout Form -->
+        <form th:action="@{/vd2/logout}" method="post" style="display:inline; margin: 0;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button class="link-button" type="submit">Đăng xuất</button>
+        </form>
+    </div>
+
+    <div class="account" sec:authorize="!isAuthenticated()">
+        <a th:href="@{/vd2/login}" class="btn primary small">Đăng nhập VD2</a>
+    </div>
+</header>
+</body>
+</html>

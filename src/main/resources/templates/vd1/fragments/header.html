@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<header th:fragment="header" class="topbar">
+    <div class="brand">
+        <a th:href="@{/vd1/home}">IOTSTAR SHOP <span class="feature-tag tag-vd1">VD1</span></a>
+    </div>
+
+    <nav>
+        <a th:href="@{/}">🏠 Trang chọn bài</a>
+        <a th:href="@{/vd1/home}">Trang chủ VD1</a>
+        <a th:href="@{/vd1/admin}" sec:authorize="hasRole('ADMIN')">⚙️ Quản trị Admin</a>
+        <a th:href="@{/vd2/home}">➡️ Sang VD2</a>
+    </nav>
+
+    <div class="account" sec:authorize="isAuthenticated()">
+        <div class="account-info">
+            <span style="font-weight: 600;" th:text="${#authentication.principal.fullName}">Họ tên người dùng</span>
+            <span style="color: #93c5fd; font-size: 13px;" th:text="${#authentication.principal.email}">user@email.com</span>
+            <span class="badge" th:classappend="${#authentication.principal.role == 'ROLE_ADMIN' ? 'badge-admin' : 'badge-user'}"
+                  th:text="${#authentication.principal.role}">ROLE_USER</span>
+        </div>
+        <form th:action="@{/vd1/logout}" method="post" style="display:inline; margin: 0;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button class="link-button" type="submit">Đăng xuất</button>
+        </form>
+    </div>
+
+    <div class="account" sec:authorize="!isAuthenticated()">
+        <a th:href="@{/vd1/login}" class="btn primary small">Đăng nhập VD1</a>
+    </div>
+</header>
+</body>
+</html>

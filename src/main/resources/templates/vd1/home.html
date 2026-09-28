@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{vd1/layouts/layout :: head('Trang chủ VD1 - IOTSTAR SHOP')}"></head>
+<body>
+
+<header th:replace="~{vd1/fragments/header :: header}"></header>
+
+<main class="container">
+    <div class="page-title">
+        <div>
+            <h2>Trang chủ - Ví Dụ 1 (VD1)</h2>
+            <p style="color: #64748b; margin: 0;">Kiến trúc: Spring Security 7 + Đăng nhập Email + Thymeleaf Fragments</p>
+        </div>
+        <div>
+            <a th:href="@{/vd1/admin}" sec:authorize="hasRole('ADMIN')" class="btn primary small">Trang Quản trị Admin</a>
+            <a th:href="@{/vd2/home}" class="btn secondary small">Khám phá VD2</a>
+        </div>
+    </div>
+
+    <!-- Alert for login success -->
+    <div class="alert success" sec:authorize="isAuthenticated()">
+        🎉 Đăng nhập thành công! Thông tin người dùng đã được nạp vào Spring Security Principal và hiển thị trên Header.
+    </div>
+
+    <!-- User Information Card populated via MapStruct UserDTO -->
+    <div class="panel" th:if="${user != null}">
+        <h3 style="margin-top: 0; color: #1e3a8a;">Thông tin người dùng (Ánh xạ qua MapStruct UserMapper)</h3>
+        <div class="form-grid">
+            <div><strong>Mã người dùng (ID):</strong></div>
+            <div th:text="${user.id}">1</div>
+
+            <div><strong>Họ và tên:</strong></div>
+            <div th:text="${user.fullName}">Nguyễn Hữu Trung</div>
+
+            <div><strong>Tên tài khoản (Username):</strong></div>
+            <div th:text="${user.username}">user01</div>
+
+            <div><strong>Địa chỉ Email:</strong></div>
+            <div th:text="${user.email}">user01@gmail.com</div>
+
+            <div><strong>Vai trò hệ thống:</strong></div>
+            <div>
+                <span class="badge" th:classappend="${user.roleName == 'ROLE_ADMIN' ? 'badge-admin' : 'badge-user'}"
+                      th:text="${user.roleName}">ROLE_USER</span>
+            </div>
+
+            <div><strong>Trạng thái tài khoản:</strong></div>
+            <div>
+                <span style="color: #16a34a; font-weight: 600;" th:if="${user.enabled}">🟢 Đang hoạt động (Enabled)</span>
+                <span style="color: #dc2626; font-weight: 600;" th:unless="${user.enabled}">🔴 Bị vô hiệu hóa (Disabled)</span>
+            </div>
+
+            <div><strong>Thời điểm khởi tạo:</strong></div>
+            <div th:text="${user.createdAt != null ? #temporals.format(user.createdAt, 'dd/MM/yyyy HH:mm:ss') : 'N/A'}">28/09/2026 10:00:00</div>
+        </div>
+    </div>
+
+    <!-- Details on VD1 Implementation -->
+    <div class="cards">
+        <div class="card">
+            <b>Cơ chế đăng nhập</b>
+            <p style="margin-top: 8px; font-size: 14px; color: #334155;">
+                VD1 xác thực <strong>chỉ bằng email</strong>. Nếu nhập username thuần (như <code>user01</code>), <code>Vd1UserDetailsService</code> sẽ từ chối do không tìm thấy email tương ứng.
+            </p>
+        </div>
+        <div class="card">
+            <b>Cơ chế giao diện</b>
+            <p style="margin-top: 8px; font-size: 14px; color: #334155;">
+                Toàn bộ layout trang VD1 sử dụng <code>th:fragment</code> và <code>th:replace</code> chuẩn của Thymeleaf, không dùng Layout Dialect.
+            </p>
+        </div>
+        <div class="card">
+            <b>Hiển thị Header</b>
+            <p style="margin-top: 8px; font-size: 14px; color: #334155;">
+                Header lấy thông tin từ <code>sec:authentication</code> gồm Họ tên, Email và Huy hiệu Vai trò kèm nút Đăng xuất POST CSRF.
+            </p>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{vd1/fragments/footer :: footer}"></footer>
+
+</body>
+</html>

@@ -1,0 +1,381 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #f5f7fb;
+    color: #172033;
+    line-height: 1.5;
+}
+
+.topbar {
+    height: 64px;
+    background: #172554;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    gap: 24px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.brand a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+}
+
+.topbar nav {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    flex: 1;
+}
+
+.topbar nav a {
+    color: #dbeafe;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.15s ease;
+}
+
+.topbar nav a:hover {
+    color: #ffffff;
+}
+
+.account {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.account-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 9999px;
+    background: #3b82f6;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-admin {
+    background: #ef4444;
+}
+
+.badge-user {
+    background: #10b981;
+}
+
+.link-button {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    cursor: pointer;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.15s ease;
+}
+
+.link-button:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.narrow {
+    max-width: 700px;
+}
+
+.page-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.panel, .card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, .06);
+    margin-bottom: 24px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.card b {
+    display: block;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.card strong {
+    display: block;
+    font-size: 26px;
+    margin-top: 8px;
+    color: #0f172a;
+}
+
+.btn {
+    display: inline-block;
+    border: 0;
+    border-radius: 8px;
+    padding: 9px 16px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: transform 0.1s, opacity 0.15s;
+    text-align: center;
+}
+
+.btn:hover {
+    opacity: 0.92;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.primary {
+    background: #2563eb;
+    color: #fff;
+}
+
+.secondary {
+    background: #e2e8f0;
+    color: #172033;
+}
+
+.danger {
+    background: #dc2626;
+    color: #fff;
+}
+
+.small {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+.full {
+    width: 100%;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.table-wrap table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-wrap th, .table-wrap td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.table-wrap th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #475569;
+    font-size: 13px;
+}
+
+.thumb {
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #e2e8f0;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 16px;
+    align-items: center;
+}
+
+.form-grid input, .form-grid select, .form-grid textarea,
+.auth-card input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.form-grid input:focus, .auth-card input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 14px 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.error {
+    background: #fee2e2;
+    color: #991b1b;
+    border-left: 4px solid #ef4444;
+}
+
+.success {
+    background: #dcfce7;
+    color: #166534;
+    border-left: 4px solid #22c55e;
+}
+
+.info {
+    background: #e0f2fe;
+    color: #0369a1;
+    border-left: 4px solid #0ea5e9;
+}
+
+.field-error {
+    color: #b91c1c;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.footer {
+    text-align: center;
+    padding: 30px;
+    color: #64748b;
+    font-size: 13px;
+    border-top: 1px solid #e2e8f0;
+    margin-top: 40px;
+}
+
+/* Auth Page Layout */
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #eff6ff 0%, #eef2ff 100%);
+    padding: 20px;
+}
+
+.auth-card {
+    width: min(440px, 94vw);
+    background: #fff;
+    padding: 36px;
+    border-radius: 18px;
+    box-shadow: 0 15px 50px rgba(15, 23, 42, .12);
+}
+
+.auth-card h1 {
+    color: #1d4ed8;
+    margin: 0 0 6px 0;
+    font-size: 24px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.auth-card h2 {
+    color: #334155;
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.auth-card label {
+    display: block;
+    margin: 14px 0 6px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #334155;
+}
+
+.auth-card .btn {
+    margin-top: 20px;
+}
+
+.auth-links {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.auth-links a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+/* Comparison Badges */
+.feature-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.tag-vd1 {
+    background: #e0e7ff;
+    color: #3730a3;
+}
+.tag-vd2 {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+@media (max-width: 800px) {
+    .topbar {
+        padding: 0 14px;
+        gap: 12px;
+    }
+    .topbar nav {
+        gap: 10px;
+        font-size: 13px;
+    }
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}

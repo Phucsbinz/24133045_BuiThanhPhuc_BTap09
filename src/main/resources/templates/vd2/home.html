@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{vd2/layouts/layout}">
+<head>
+    <title>Trang chủ UTEShop</title>
+</head>
+<body>
+
+<main layout:fragment="content" class="container">
+    <div class="page-title">
+        <div>
+            <h2>Trang chủ UTEShop - Ví Dụ 2 (VD2)</h2>
+            <p style="color: #64748b; margin: 0;">Kiến trúc: Spring Security 7 + Custom Login (Username/Email) + Thymeleaf Layout Dialect</p>
+        </div>
+        <div>
+            <a th:href="@{/vd2/admin}" sec:authorize="hasRole('ADMIN')" class="btn primary small">Trang Quản trị Admin</a>
+            <a th:href="@{/vd1/home}" class="btn secondary small">Khám phá VD1</a>
+        </div>
+    </div>
+
+    <!-- Alert welcome matching PDF spec -->
+    <div class="panel" style="border-left: 6px solid #2563eb;">
+        <h1 style="margin: 0 0 10px 0; font-size: 24px; color: #1e3a8a;">Trang chủ UTEShop</h1>
+        <p style="font-size: 16px; margin: 0;">
+            Xin chào <strong style="color: #2563eb;" th:text="${#authentication.principal.fullName}">User</strong>!
+        </p>
+    </div>
+
+    <!-- User Information Card populated via MapStruct UserDTO -->
+    <div class="panel" th:if="${user != null}">
+        <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
+            <img th:src="${user.images != null and !#strings.isEmpty(user.images) ? user.images : '/images/avatar-default.png'}"
+                 alt="Avatar" style="width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 3px solid #3b82f6;">
+            <div>
+                <h3 style="margin: 0; font-size: 20px;" th:text="${user.fullName}">Nguyễn Hữu Trung</h3>
+                <div style="color: #64748b; font-size: 14px; margin-top: 4px;">
+                    <span th:text="'@' + ${user.username}">@user01</span> •
+                    <span th:text="${user.email}">user01@gmail.com</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-grid">
+            <div><strong>Mã người dùng (ID):</strong></div>
+            <div th:text="${user.id}">1</div>
+
+            <div><strong>Họ và tên:</strong></div>
+            <div th:text="${user.fullName}">Nguyễn Hữu Trung</div>
+
+            <div><strong>Tên tài khoản (Username):</strong></div>
+            <div th:text="${user.username}">user01</div>
+
+            <div><strong>Địa chỉ Email:</strong></div>
+            <div th:text="${user.email}">user01@gmail.com</div>
+
+            <div><strong>Đường dẫn Ảnh (Images):</strong></div>
+            <div>
+                <code th:text="${user.images != null ? user.images : '(null - Sử dụng ảnh mặc định)'}">/images/user.png</code>
+            </div>
+
+            <div><strong>Vai trò hệ thống:</strong></div>
+            <div>
+                <span class="badge" th:classappend="${user.roleName == 'ROLE_ADMIN' ? 'badge-admin' : 'badge-user'}"
+                      th:text="${user.roleName}">ROLE_USER</span>
+            </div>
+
+            <div><strong>Trạng thái tài khoản:</strong></div>
+            <div>
+                <span style="color: #16a34a; font-weight: 600;" th:if="${user.enabled}">🟢 Đang hoạt động (Enabled)</span>
+                <span style="color: #dc2626; font-weight: 600;" th:unless="${user.enabled}">🔴 Bị vô hiệu hóa (Disabled)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details on VD2 Implementation -->
+    <div class="cards">
+        <div class="card">
+            <b>Cơ chế đăng nhập linh hoạt</b>
+            <p style="margin-top: 8px; font-size: 14px; color: #334155;">
+                VD2 cho phép người dùng đăng nhập bằng <strong>Username</strong> (<code>user01</code>) hoặc bằng <strong>Email</strong> (<code>user01@gmail.com</code>).
+            </p>
+        </div>
+        <div class="card">
+            <b>CustomUserDetails & Header</b>
+            <p style="margin-top: 8px; font-size: 14px; color: #334155;">
+                Đối tượng Principal lưu trữ đầy đủ ảnh đại diện, họ tên, username, email và vai trò, hỗ trợ fallback avatar mặc định nếu người dùng chưa có ảnh.
+            </p>
+        </div>
+        <div class="card">
+            <b>Thymeleaf Layout Dialect</b>
+            <p style="margin-top: 8px; font-size: 14px; color: #334155;">
+                Sử dụng <code>layout:decorate</code> và <code>layout:fragment</code> giúp tái sử dụng cấu trúc giao diện chuẩn và tiêu đề trang động.
+            </p>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
